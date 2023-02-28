@@ -86,11 +86,11 @@ The *agent* section defines how data is collected. The snippet below outlines th
 
 ```
 [agent]
-interval = "3s"
-collection_jitter = "2s"
-flush_interval = "5s"
-flush_jitter = "2s"
-omit_hostname = true
+  interval = "3s"
+  collection_jitter = "2s"
+  flush_interval = "5s"
+  flush_jitter = "2s"
+  omit_hostname = true
 ```
 Config item | Meaning
 ---|---
@@ -107,11 +107,11 @@ Below is the snippet of the config file that sets up this plugin. The first part
 
 ```
 [[inputs.mqtt_consumer]]
-servers = ["tcp://mqtt.docker.local:8883"]
-topics = ["manual_input/feeds/input"]
-data_format = "json_v2"
-topic_tag = ""
-qos = 1
+  servers = ["tcp://mqtt.docker.local:8883"]
+  topics = ["manual_input/feeds/input"]
+  data_format = "json_v2"
+  topic_tag = ""
+  qos = 1
 
   [[inputs.mqtt_consumer.json_v2]]
     measurement_name = "fault_tracking"
@@ -197,42 +197,36 @@ files | Which files to write to (stdout here for logging)
 *telegraf.conf*
 ```
 [agent]
-interval = "3s"
-collection_jitter = "2s"
-flush_interval = "5s"
-flush_jitter = "2s"
+  interval = "3s"
+  collection_jitter = "2s"
+  flush_interval = "5s"
+  flush_jitter = "2s"
 
-omit_hostname = true
+  omit_hostname = true
 
 [[inputs.mqtt_consumer]]
-servers = ["tcp://mqtt.docker.local:8883"]
-topics = ["manual_input/feeds/input"]
-data_format = "json_v2"
-topic_tag = ""
-qos = 1
+  servers = ["tcp://mqtt.docker.local:8883"]
+  topics = ["manual_input/feeds/input"]
+  data_format = "json_v2"
+  topic_tag = ""
+  qos = 1
 
-	[[inputs.mqtt_consumer.json_v2]]
-		measurement_name = "fault_tracking"
-		# A string with valid GJSON path syntax, will override measurement_name
-        #measurement_name_path = "status" 		
-
-		# A string with valid GJSON path syntax to a valid timestamp (single value)
- 		timestamp_path = "timestamp"
+  [[inputs.mqtt_consumer.json_v2]]
+    measurement_name = "fault_tracking"
+    #measurement_name_path = "status" 		
+    timestamp_path = "timestamp"
 		
-		# A string with a valid timestamp format (see below for possible values)
-		timestamp_format = "2006-01-02T15:04:05.999-07:00" 
-		[[inputs.mqtt_consumer.json_v2.field]]
-            path = "running" # A string with valid GJSON path syntax
-			type = "boolean"
+    timestamp_format = "2006-01-02T15:04:05.999-07:00" 
+    [[inputs.mqtt_consumer.json_v2.field]]
+      path = "running" # A string with valid GJSON path syntax
+      type = "boolean"
 		
-		[[inputs.mqtt_consumer.json_v2.tag]]
-            path = "machine_id" # A string with valid GJSON path syntax
-			type = "string"
-
-
-		[[inputs.mqtt_consumer.json_v2.field]]
-			path = "status"
-			type = "string"
+    [[inputs.mqtt_consumer.json_v2.tag]]
+      path = "machine_id" # A string with valid GJSON path syntax
+      type = "string"
+    [[inputs.mqtt_consumer.json_v2.field]]
+      path = "status"
+      type = "string"
 
 [[outputs.influxdb_v2]]	
   urls = ["http://timeseries-db.docker.local:8086"]
