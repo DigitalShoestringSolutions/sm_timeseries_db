@@ -1,0 +1,34 @@
+version: '2'
+
+services:
+        timeseries-db:
+            extends:
+                file: timeseries_sds/app.yml
+                service: db
+            networks:
+                internal:
+                    aliases:
+                        - timeseries-db.docker.local
+            logging:
+                    driver: syslog
+                    options:
+                            tag: docker-timeseries-db
+            restart: unless-stopped
+        timeseries-db-input:
+            extends:
+                file: timeseries_sds/app.yml
+                service: telegraf
+            networks:
+                internal:
+                    aliases:
+                        - timeseries-input.docker.local
+            logging:
+                driver: syslog
+                options:
+                    tag: docker-timeseries-input
+            restart: unless-stopped
+            depends_on:
+                - "timeseries-db"
+
+networks:
+        internal:
