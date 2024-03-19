@@ -1,6 +1,7 @@
 version: '2'
 
 services:
+
         timeseries-db:
             extends:
                 file: timeseries_sds/app.yml
@@ -10,10 +11,13 @@ services:
                     aliases:
                         - timeseries-db.docker.local
             logging:
-                    driver: syslog
-                    options:
-                            tag: docker-timeseries-db
+                driver: syslog
+                options:
+                    tag: docker-timeseries-db
             restart: unless-stopped
+            depends_on:
+                - "mqtt_broker"
+            
         timeseries-db-input:
             extends:
                 file: timeseries_sds/app.yml
@@ -29,6 +33,7 @@ services:
             restart: unless-stopped
             depends_on:
                 - "timeseries-db"
+                - "mqtt_broker"
 
 networks:
         internal:
