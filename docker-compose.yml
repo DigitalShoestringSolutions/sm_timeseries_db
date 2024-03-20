@@ -1,5 +1,3 @@
-version: '2'
-
 services:
 
         timeseries-db:
@@ -34,6 +32,3 @@ services:
             depends_on:
                 - "timeseries-db"
                 - "mqtt_broker"
-
-networks:
-        internal:
