@@ -28,7 +28,7 @@ services:
                 - "mqtt_broker"
             
         timeseries-db-input:
-            image: telegraf:1.21
+            image: telegraf:1.32
             privileged: true
             volumes:
             - ./config/telegraf.conf:/etc/telegraf/telegraf.conf
