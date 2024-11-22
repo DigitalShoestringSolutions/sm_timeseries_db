@@ -1,7 +1,7 @@
 services:
 
         timeseries-db:
-            image: influxdb:2.6
+            image: influxdb:2.7
             command: "./entrypoint.sh --reporting-disabled"
             volumes:
             - ./data/influxdb2:/var/lib/influxdb2:rw
@@ -26,7 +26,7 @@ services:
             restart: unless-stopped
             
         timeseries-db-input:
-            image: telegraf:1.21
+            image: telegraf:1.32
             privileged: true
             volumes:
             - ./config/telegraf.conf:/etc/telegraf/telegraf.conf
