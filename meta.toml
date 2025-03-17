@@ -1,0 +1,16 @@
+
+[influx]
+    dockerfile = "influx.Dockerfile"
+    compose_partial = "influx.snippet.yml"
+    command = "./entrypoint.sh --reporting-disabled"
+    volume.data.path = "/var/lib/influxdb2"
+    volume.data.mode = "rw"
+    volume.user_config.ignore = true
+    
+    ports.ui = 8086
+
+[telegraf]
+    dockerfile = "telegraf.Dockerfile"
+    compose_partial = "telegraf.snippet.yml"
+    volume.user_config.ignore = true 
+    volume.data.ignore = true
